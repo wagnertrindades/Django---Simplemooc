@@ -1,26 +1,6 @@
-<!doctype html>
-{% load static %}
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Simple MOOC - Uma simples plataforma de ensino a distância" />
-    <title>Simple MOOC</title>
-    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.3.0/pure-min.css">
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}" />
-</head>
-<body>
-<div class="header">
-    <div class="pure-menu pure-menu-open pure-menu-fixed pure-menu-horizontal">
-        <a class="pure-menu-heading" href="">SIMPLE MOOC</a>
-        <ul>
-            <li class="pure-menu-selected"><a href="base.html">Início</a></li>
-            <li><a href="#">Cursos</a></li>
-            <li><a href="contact.html">Contato</a></li>
-        </ul>
-    </div>
-</div>
-<div class="content">
+{% extends 'base.html' %}
+
+{% block content %}
     <div class="pure-g-r content-ribbon">
         <div class="pure-u-1">
             <h1>Fale conosco</h1>
@@ -32,10 +12,4 @@
             </ul>
         </div>
     </div>
-    <div class="footer">
-        Simple MOOC - Uma simples plataforma de ensino a distância
-    </div>
-</div>
-<script src="http://yui.yahooapis.com/3.12.0/build/yui/yui-min.js"></script>
-</body>
-</html>
+{% endblock %}
