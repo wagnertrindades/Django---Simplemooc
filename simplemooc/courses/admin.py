@@ -1,3 +1,6 @@
 from django.contrib import admin
 
-# Register your models here.
+from .models import Course
+
+#Registando o model para aparecer no admin
+admin.site.register(Course)

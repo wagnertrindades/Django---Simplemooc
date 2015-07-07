@@ -49,5 +49,9 @@ class Course(models.Model):
 	created_at = models.DateTimeField('Criado em', auto_now_add=True)
 	updated_at = models.DateTimeField('Atualizado em', auto_now=True) 
 
-
+	# Insere o select customizado CourseManager no objects do django
 	objects =  CourseManager()
+
+	# Coloca o name como "Apelido" ao objeto quando referenciado no admin do django
+	def __str__(self):
+		return self.name
