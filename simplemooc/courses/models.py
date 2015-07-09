@@ -36,7 +36,8 @@ class Course(models.Model):
 	# Slug é um nome unico, sem espacos e em minusculas
 	slug = models.SlugField('Atalho')
 	# TextField é um campo de strings sem max length
-	description = models.TextField('Descrição', blank=True)
+	description = models.TextField('Descrição Simples', blank=True)
+	about = models.TextField('Sobre o curso', blank=True)
 	# DateField pegada a data
 	start_date = models.DateField(
 		'Data de Início', null=True, blank=True
