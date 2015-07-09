@@ -84,4 +84,8 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+# Definição do caminho a salvar imagens feitas por upload
 MEDIA_ROOT = os.path.join(BASE_DIR, 'simplemooc', 'media')
+
+# Url base para os arquivos estaticos feitos por upload
+MEDIA_URL =  '/media/'
