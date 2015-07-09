@@ -55,3 +55,9 @@ class Course(models.Model):
 	# Coloca o name como "Apelido" ao objeto quando referenciado no admin do django
 	def __str__(self):
 		return self.name
+
+	# A classe meta serve para fazer uma customização no verbose name do admin do django da classe Course e também ordenar os campos
+	class Meta:
+		verbose_name = 'Curso'
+		verbose_name_plural = 'Cursos'
+		ordering = ['name']
