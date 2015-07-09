@@ -48,7 +48,7 @@ class Course(models.Model):
 	)
 	# DateTimeField pega data e horario
 	created_at = models.DateTimeField('Criado em', auto_now_add=True)
-	updated_at = models.DateTimeField('Atualizado em', auto_now=True) 
+	updated_at = models.DateTimeField('Atualizado em', auto_now=True)
 
 	# Insere o select customizado CourseManager no objects do django
 	objects =  CourseManager()
@@ -56,6 +56,12 @@ class Course(models.Model):
 	# Coloca o name como "Apelido" ao objeto quando referenciado no admin do django
 	def __str__(self):
 		return self.name
+
+	# Faz um permalink para o objeto
+	# O models.permalink faz o from django.core.urlresolvers import reverse para resgatar o link conforme a função que é feita abaixo	
+	@models.permalink
+	def get_absolute_url(self):
+		return ('courses:details', (), { 'slug' : self.slug })
 
 	# A classe meta serve para fazer uma customização no verbose name do admin do django da classe Course e também ordenar os campos
 	class Meta:
