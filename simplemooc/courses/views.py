@@ -24,16 +24,20 @@ def index(resquest):
 # View com url por slug
 def details(resquest, slug):
 	course = get_object_or_404(Course, slug=slug)
+	context = {}
+
 	# Verifica se o metodo é post ai insere os dados senão retorna vazio
 	if resquest.method == 'POST':
 		form = ContactCourse(resquest.POST)
+		if form.is_valid():
+			context['is_valid'] = True
+			print(form.cleaned_data)
+			form = ContactCourse()
 	else:
 		form = ContactCourse()
 
-	context = {
-		'course' : course,
-		'form' : form
-	}
+	context['form'] = form
+	context['course'] = course
 	template_name = 'courses/details.html'
 
 	return render(resquest, template_name, context)
