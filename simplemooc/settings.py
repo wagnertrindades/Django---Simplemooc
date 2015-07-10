@@ -89,3 +89,13 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'simplemooc', 'media')
 
 # Url base para os arquivos estaticos feitos por upload
 MEDIA_URL =  '/media/'
+
+#Envio de email
+#EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+DEFAULT_FROM_EMAIL = 'Nome <email@gmail.com>'
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'stmp.gmail.com'
+EMAIL_HOST_USER = 'email@gmail.com'
+EMAIL_HOST_PASSWORD = 'senha'
+EMAIL_PORT = 587
