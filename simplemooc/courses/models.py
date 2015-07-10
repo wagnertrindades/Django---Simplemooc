@@ -53,18 +53,24 @@ class Course(models.Model):
 	# Insere o select customizado CourseManager no objects do django
 	objects =  CourseManager()
 
-	# Coloca o name como "Apelido" ao objeto quando referenciado no admin do django
 	def __str__(self):
+		"""
+			Coloca o name como "Apelido" ao objeto quando referenciado no admin do django
+		"""
 		return self.name
 
-	# Faz um permalink para o objeto
 	# O models.permalink faz o from django.core.urlresolvers import reverse para resgatar o link conforme a função que é feita abaixo	
 	@models.permalink
 	def get_absolute_url(self):
+		"""
+			Faz um permalink para o objeto
+		"""
 		return ('courses:details', (), { 'slug' : self.slug })
 
-	# A classe meta serve para fazer uma customização no verbose name do admin do django da classe Course e também ordenar os campos
 	class Meta:
+		"""
+			A classe meta serve para fazer uma customização no verbose name do admin do django da classe Course e também ordenar os campos
+		"""
 		verbose_name = 'Curso'
 		verbose_name_plural = 'Cursos'
 		ordering = ['name']
