@@ -8,7 +8,7 @@ def register(resquest):
     template_name = 'accounts/register.html'
     if resquest.method == 'POST':
         form = RegisterForm(resquest.POST)
-        if form.is_valid:
+        if form.is_valid():
             form.save()
             return redirect(settings.LOGIN_URL)
     else:
