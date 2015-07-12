@@ -73,14 +73,18 @@ body .primary-button {
     padding: 1em;
     font-size: 80%;
 }
-.lierror{
+.errorlist li{
     list-style: none;
-    margin-left: 123px;
-    width: 210px;
+    margin-left: -40px;
+    width: 310px;
     border-radius: 5px;
     background-color: #f5ab9e;
     padding: 5px 10px;
     color: #8c3a2b;
+}
+#contato .errorlist li{
+    margin-left: 123px;
+    width: 210px;
 }
 .sucess{
     padding: 5px 10px;
