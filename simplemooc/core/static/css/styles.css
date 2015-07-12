@@ -82,3 +82,10 @@ body .primary-button {
     padding: 5px 10px;
     color: #8c3a2b;
 }
+.sucess{
+    padding: 5px 10px;
+    background-color: #d3eda3;
+    color: #72962e;
+    width: 300px;
+    border-radius: 5px;
+}
