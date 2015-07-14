@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth.forms import UserCreationForm 
+from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
@@ -41,5 +41,19 @@ def edit(resquest):
             context['success'] = True 
     else:
         form = EditAccountForm(instance= resquest.user)
+    context['form'] = form
+    return render(resquest, template_name, context)
+
+@login_required
+def edit_password(resquest):
+    template_name = 'accounts/edit_password.html'
+    context = {}
+    if resquest.method == 'POST':
+        form = PasswordChangeForm(data=resquest.POST, user=resquest.user)
+        if form.is_valid():
+            form.save()
+            context['success'] = True
+    else:
+        form = PasswordChangeForm(user=resquest.user)
     context['form'] = form
     return render(resquest, template_name, context)
