@@ -9,7 +9,11 @@
 {% block dashboard_content %}
     <div class="pure-u-2-3">
         <div class="inner">
-            <form class="pure-form pure-form-stacked">
+            <form class="pure-form pure-form-stacked" method="post">
+                {% csrf_token %}
+                {% if success %}
+                    <p>Os dados foram alterados com sucesso.</p>
+                {% endif %}
                 <fieldset>
                     {{ form.non_field_errors }}
                     {% for field in form  %}

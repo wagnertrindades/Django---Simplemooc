@@ -32,7 +32,14 @@ def register(resquest):
 @login_required
 def edit(resquest):
     template_name = 'accounts/edit.html'
-    form = EditAccountForm()
     context = {}
+    if resquest.method == 'POST':
+        form = EditAccountForm(resquest.POST, instance=resquest.user)
+        if form.is_valid():
+            form.save()
+            form = EditAccountForm(instance=resquest.user)
+            context['success'] = True 
+    else:
+        form = EditAccountForm(instance= resquest.user)
     context['form'] = form
     return render(resquest, template_name, context)
