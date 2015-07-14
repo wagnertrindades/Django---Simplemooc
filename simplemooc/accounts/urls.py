@@ -7,4 +7,5 @@ urlpatterns = patterns('',
     url(r'^sair/$', 'django.contrib.auth.views.logout', 
         {'next_page' : 'core:home'}, name='logout'),
     url(r'^cadastre-se/$', 'simplemooc.accounts.views.register', name='register'),
+    url(r'^editar/$', 'simplemooc.accounts.views.edit', name='edit'),
 )
