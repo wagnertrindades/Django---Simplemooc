@@ -49,7 +49,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 
 class PasswordReset(models.Model):
 
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name='Usuário')
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name='Usuário', related_name='resets')
     key = models.CharField('Chave', max_length=100, unique=True)
     created_at = models.DateTimeField('Criado em', auto_now_add=True)
     confirmed = models.BooleanField('Confirmado?', default=False, blank=True)
