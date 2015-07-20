@@ -3,7 +3,7 @@ import string
 import random
 
 # Gera caracteres randomicos
-def randon_key(size=5):
+def random_key(size=5):
     chars = string.ascii_uppercase + string.digits
     return ''.join(random.choice(chars) for x in range(size))
 
