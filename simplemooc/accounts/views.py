@@ -6,6 +6,7 @@ from django.conf import settings
 from django.contrib import messages 
 
 from simplemooc.core.utils import generate_hash_key
+from simplemooc.courses.models import Enrollment
 
 from .forms import RegisterForm, EditAccountForm, PasswordResetForm
 from .models import PasswordReset
@@ -15,7 +16,8 @@ User = get_user_model()
 @login_required
 def dashboard(resquest):
     template_name = 'accounts/dashboard.html'
-    return render(resquest, template_name)
+    context = {}
+    return render(resquest, template_name, context)
 
 def register(resquest):
     template_name = 'accounts/register.html'
