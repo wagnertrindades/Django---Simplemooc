@@ -4,6 +4,7 @@ from django.contrib import messages
 
 from .models import Course, Enrollment, Announcement
 from .forms import ContactCourse, CommentForm 
+from .decorators import enrollment_required	
 
 def index(resquest):
 	courses = Course.objects.all()
@@ -77,15 +78,18 @@ def undo_enrollment(resquest, slug):
 	return render(resquest, template_name, context)
 
 @login_required
+@enrollment_required
 def announcements(resquest, slug):
-	course = get_object_or_404(Course, slug=slug)
-	if not resquest.user.is_staff:
-		enrollment= get_object_or_404(
-			Enrollment, user=resquest.user, course=course
-		)
-		if not enrollment.is_approved():
-			messages.error(resquest, 'A sua inscrição está pendente')
-			return redirect('accounts:dashboard')
+	# --- Jeito sem decorator
+	# course = get_object_or_404(Course, slug=slug)
+	# if not resquest.user.is_staff:
+	# 	enrollment= get_object_or_404(
+	# 		Enrollment, user=resquest.user, course=course
+	# 	)
+	# 	if not enrollment.is_approved():
+	# 		messages.error(resquest, 'A sua inscrição está pendente')
+	# 		return redirect('accounts:dashboard')
+	course = resquest.course
 	template_name = 'courses/announcements.html'
 	context = {
 		'course': course,
@@ -94,15 +98,18 @@ def announcements(resquest, slug):
 	return render(resquest, template_name, context)
 
 @login_required
+@enrollment_required
 def show_announcement(resquest, slug, pk):
-	course = get_object_or_404(Course, slug=slug)
-	if not resquest.user.is_staff:
-		enrollment= get_object_or_404(
-			Enrollment, user=resquest.user, course=course
-		)
-		if not enrollment.is_approved():
-			messages.error(resquest, 'A sua inscrição está pendente')
-			return redirect('accounts:dashboard')
+	# --- Jeito sem decorator
+	# course = get_object_or_404(Course, slug=slug)
+	# if not resquest.user.is_staff:
+	# 	enrollment= get_object_or_404(
+	# 		Enrollment, user=resquest.user, course=course
+	# 	)
+	# 	if not enrollment.is_approved():
+	# 		messages.error(resquest, 'A sua inscrição está pendente')
+	# 		return redirect('accounts:dashboard')
+	course = resquest.course
 	announcement = get_object_or_404(course.announcements.all(), pk=pk)
 	form = CommentForm(resquest.POST or None)
 	if form.is_valid():
