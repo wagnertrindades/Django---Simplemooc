@@ -8,4 +8,5 @@ urlpatterns = patterns('simplemooc.courses.views',
     # Url com slug
     url(r'^(?P<slug>[\w_-]+)$', 'details', name='details'),
     url(r'^(?P<slug>[\w_-]+)/inscricao/$', 'enrollment', name='enrollment'),
+    url(r'^(?P<slug>[\w_-]+)/anuncios/$', 'announcements', name='announcements'),
 )

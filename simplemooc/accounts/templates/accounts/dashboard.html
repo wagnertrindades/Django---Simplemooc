@@ -4,6 +4,11 @@
 
 {% block content %}
 
+{# Forma com o my_courses -> {% my_courses user %} #}
+{# E com o my_courses não é necessario colocar html fazendo o for como abaixo, já que ele tem um template separado #}
+{# E dessa forma com o load_my_courses você monta o html #}
+{% load_my_courses user as enrollments %}
+
     <div class="pure-g-r content-ribbon">
         <div class="pure-u-1">
             <ul class="breadcrumb">
@@ -18,44 +23,42 @@
                     <li class="pure-menu-heading">
                         Bem-vindo, {{ user }}
                     </li>
-                    {# Forma com o my_courses -> {% my_courses user %} #}
-                    {# E com o my_courses não é necessario colocar html fazendo o for como abaixo, já que ele tem um template separado #}
-                    {# E dessa forma com o load_my_courses você monta o html #}
-                    {% load_my_courses user as enrollments %}
-                    <li class="pure-menu-heading">Meus Cursos</li>
-                    {% for enrollment in enrollments %}
+                    {% block menu_options %}
+
+                        <li class="pure-menu-heading">Meus Cursos</li>
+                        {% for enrollment in enrollments %}
+                            <li>
+                                <a href="{% url 'courses:announcements' enrollment.course.slug %}">
+                                    <i class="fa fa-book"></i>
+                                    {{ enrollment.course }}
+                                </a>
+                            </li>
+                        {% empty %}
+                            <li>Nenhum curso encontrado</li>    
+                        {% endfor %}
+                        <li class="pure-menu-heading">Conta</li>
                         <li>
-                            <a href="#">
-                                <i class="fa fa-book"></i>
-                                {{ enrollment.course }}
+                            <a href="{% url 'accounts:edit' %}">
+                                <i class="fa fa-cog"></i>
+                                Editar Informações
                             </a>
                         </li>
-                    {% empty %}
-                        <li>Nenhum curso encontrado</li>    
-                    {% endfor %}
-                    <li class="pure-menu-heading">Conta</li>
-                    <li>
-                        <a href="{% url 'accounts:edit' %}">
-                            <i class="fa fa-cog"></i>
-                            Editar Informações
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{% url 'accounts:edit_password' %}">
-                            <i class="fa fa-lock"></i>
-                            Editar Senha
-                        </a>
-                    </li>
+                        <li>
+                            <a href="{% url 'accounts:edit_password' %}">
+                                <i class="fa fa-lock"></i>
+                                Editar Senha
+                            </a>
+                        </li>
+                    {% endblock %}
                 </ul>
             </div>
         </div>
         <div class="pure-u-2-3">
             <div class="inner">
-                {% block dashboard_content  %}
+                {% block dashboard_content %}
                     <h2>Meus Cursos</h2>
                     {% for enrollment in enrollments %}
                         
-                    
                         <div class="well">
                             <h3>
                                 {{ enrollment.course }} 
@@ -63,7 +66,7 @@
                             </h3>
                             {{ enrollment.course.description|linebreaks }}
                             <div class="pure-controls">
-                                <a href="#" class="pure-button pure-button-primary">Acessar</a>
+                                <a href="{% url 'courses:announcements' enrollment.course.slug %}" class="pure-button pure-button-primary">Acessar</a>
                                 <a href="#" class="pure-button button-error">Cancelar</a>
                             </div>
                         </div>
