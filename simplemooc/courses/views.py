@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 
-from .models import Course, Enrollment
+from .models import Course, Enrollment, Announcement
 from .forms import ContactCourse 
 
 def index(resquest):
@@ -90,5 +90,23 @@ def announcements(resquest, slug):
 	context = {
 		'course': course,
 		'announcements': course.announcements.all()
+	}
+	return render(resquest, template_name, context)
+
+@login_required
+def show_announcement(resquest, slug, pk):
+	course = get_object_or_404(Course, slug=slug)
+	if not resquest.user.is_staff:
+		enrollment= get_object_or_404(
+			Enrollment, user=resquest.user, course=course
+		)
+		if not enrollment.is_approved():
+			messages.error(resquest, 'A sua inscrição está pendente')
+			return redirect('accounts:dashboard')
+	template_name = 'courses/show_announcement.html'
+	announcement = get_object_or_404(course.announcements.all(), pk=pk)
+	context = {
+		'course': course,
+		'announcement': announcement,
 	}
 	return render(resquest, template_name, context)
