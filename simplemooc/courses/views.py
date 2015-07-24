@@ -88,6 +88,7 @@ def announcements(resquest, slug):
 			return redirect('accounts:dashboard')
 	template_name = 'courses/announcements.html'
 	context = {
-		'course': course
+		'course': course,
+		'announcements': course.announcements.all()
 	}
 	return render(resquest, template_name, context)
