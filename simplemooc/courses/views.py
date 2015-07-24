@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 
-from .models import Course, Enrollment, Announcement
+from .models import Course, Enrollment, Announcement, Lesson
 from .forms import ContactCourse, CommentForm 
 from .decorators import enrollment_required	
 
@@ -109,7 +109,6 @@ def show_announcement(resquest, slug, pk):
 	# 	if not enrollment.is_approved():
 	# 		messages.error(resquest, 'A sua inscrição está pendente')
 	# 		return redirect('accounts:dashboard')
-	course = resquest.course
 	announcement = get_object_or_404(course.announcements.all(), pk=pk)
 	form = CommentForm(resquest.POST or None)
 	if form.is_valid():
@@ -124,5 +123,34 @@ def show_announcement(resquest, slug, pk):
 		'course': course,
 		'announcement': announcement,
 		'form': form,
+	}
+	return render(resquest, template_name, context)
+
+@login_required
+@enrollment_required
+def lessons(resquest, slug):
+	course = resquest.course
+	template_name = 'courses/lessons.html'
+	lessons = course.release_lessons()
+	if resquest.user.is_staff:
+		lessons = course.lessons.all()
+	context = {
+		'course': course,
+		'lessons': lessons
+	}
+	return render(resquest, template_name, context)
+
+@login_required
+@enrollment_required
+def show_lesson(resquest, slug, pk):
+	course = resquest.course
+	lesson = get_object_or_404(Lesson, pk=pk, course=course)
+	if not resquest.user.is_staff and not lesson.is_available():
+		messages.error(resquest, 'Esta aula não está disponível') 
+		return redirect('courses:lessons', slug=course.slug)
+	template_name = 'courses/show_lesson.html'
+	context = {
+		'course': course,
+		'lesson': lesson
 	}
 	return render(resquest, template_name, context)

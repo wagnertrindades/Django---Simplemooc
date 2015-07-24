@@ -1,5 +1,6 @@
 from django.db import models
 from django.conf import settings
+from django.utils import timezone
 
 from simplemooc.core.mail import send_mail_template
 
@@ -70,6 +71,11 @@ class Course(models.Model):
 		"""
 		return ('courses:details', (), { 'slug' : self.slug })
 
+	def release_lessons(self):
+		today = timezone.now().date()
+		# release_date__gte -> filtro se é maior ou igual
+		return self.lessons.filter(release_date__gte=today)
+
 	class Meta:
 		"""
 			A classe meta serve para fazer uma customização no verbose name do admin do django da classe Course e também ordenar os campos
@@ -92,6 +98,12 @@ class Lesson(models.Model):
 
 	def __str__(self):
 		return self.name
+
+	def is_available(self):
+		if self.release_date:
+			today = timezone.now().date()
+			return self.release_date >= today
+		return False
 
 	class Meta:
 		verbose_name = 'Aula'
