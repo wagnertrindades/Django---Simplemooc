@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Course
+from .models import Course, Enrollment, Announcement, Comment
 
 #Classe para customizar o admin do django
 class CourseAdmin(admin.ModelAdmin):
@@ -13,3 +13,4 @@ class CourseAdmin(admin.ModelAdmin):
 
 #Registando o model para aparecer no admin
 admin.site.register(Course, CourseAdmin)
+admin.site.register([Enrollment, Announcement, Comment])
