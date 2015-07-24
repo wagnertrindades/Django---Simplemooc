@@ -13,4 +13,5 @@ urlpatterns = patterns('simplemooc.courses.views',
     url(r'^(?P<slug>[\w_-]+)/anuncios/(?P<pk>\d+)/$', 'show_announcement', name='show_announcement'),
     url(r'^(?P<slug>[\w_-]+)/aulas/$', 'lessons', name='lessons'),
     url(r'^(?P<slug>[\w_-]+)/aula/(?P<pk>\d+)/$', 'show_lesson', name='show_lesson'),
+    url(r'^(?P<slug>[\w_-]+)/materiais/(?P<pk>\d+)/$', 'material', name='material'),
 )
