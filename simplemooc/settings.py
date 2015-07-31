@@ -20,11 +20,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 SECRET_KEY = 'bq4$p-d@zkh9=2!^x6jg-(cz4%e8-u2+ekmet(ra!@1f%31+bh'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# No arquivo local_settings.py que é o de desenvolvimento o debug é true
+DEBUG = False
 
-TEMPLATE_DEBUG = True
-
-ALLOWED_HOSTS = []
+TEMPLATE_DEBUG = False
 
 
 # Application definition
@@ -59,7 +58,7 @@ WSGI_APPLICATION = 'simplemooc.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/1.7/ref/settings/#databases
-
+# Esse DATABASES vai para o arquivo local_settings.py para ser sobrescrito em modo de desenvolvimento
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -130,3 +129,8 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
+
+try:
+    from simplemooc.local_settings import *
+except ImportError:
+    pass
