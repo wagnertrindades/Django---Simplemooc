@@ -4,7 +4,7 @@ from django.test.client import Client
 from django.core.urlresolvers import reverse
 from django.conf import settings
 
-from .models import Course
+from simplemooc.courses.models import Course
 
 class ContactCourseTestCase(TestCase):
 
