@@ -1,5 +1,7 @@
 from django.shortcuts import render
-from django.views.generic import TemplateView, View
+from django.views.generic import TemplateView, View, ListView
+
+from .models import Thread
 
 # Class-Based Views
 
@@ -19,10 +21,20 @@ from django.views.generic import TemplateView, View
 # 2
 # index = TemplateView.as_view(template_name='forum/index.html')
 
-# Vamos utilizar a View porque a ideia da ForumView é listar os modelos
-class ForumView(View):
+# A view padrão mostra o modelo
+# A View padrão pode ser implementada assim
+# class ForumView(View):
 
-    def get(self, resquest, *args, **kwargs):
-        return render(resquest, 'forum/index.html')
+#     def get(self, resquest, *args, **kwargs):
+#         return render(resquest, 'forum/index.html')
+
+# index = ForumView.as_view()
+
+# ListView
+class ForumView(ListView):
+
+    model = Thread
+    paginate_by = 10
+    template_name = 'forum/index.html'
 
 index = ForumView.as_view()
