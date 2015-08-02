@@ -37,7 +37,7 @@
                     <li class="pure-menu-heading">Tags</li>
                     <li>
                         {% for tag in tags %}
-                        <a href="#" class="tags">
+                        <a href="{% url 'forum:index_tagged' tag.slug %}" class="tags">
                             <i class="fa fa-tag"></i>
                             {{ tag }}
                         </a>
@@ -58,7 +58,7 @@
                         <i class="fa fa-tags"></i>
                         Tags: 
                         {% for tag in thread.tags.all %}
-                        <a href="" title="">{{ tag }}</a>{% if not forloop.last %},{% endif %}
+                        <a href="{% url 'forum:index_tagged' tag.slug %}" title="">{{ tag }}</a>{% if not forloop.last %},{% endif %}
                         {% endfor %}
                         <a class="fright" href="" title="">Atualizado a {{ thread.modified|timesince }} atrás</a>
                     </p>

@@ -43,6 +43,12 @@ class ForumView(ListView):
             queryset = queryset.order_by('-views')
         elif order == 'answers':
             queryset = queryset.order_by('-answers')
+        # Quando usamos os parametros pela url no caso Tag, 
+        # utilizamos para parametros não nomeados o *args
+        # E **kwargs para parametros nomeados
+        tag = self.kwargs.get('tag', '')
+        if tag:
+            queryset = queryset.filter(tags__slug__icontains=tag)
         return queryset
 
     def get_context_data(self, **kwargs):
