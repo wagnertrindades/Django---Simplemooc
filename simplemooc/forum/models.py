@@ -36,11 +36,12 @@ class Thread(models.Model):
 class Reply(models.Model):
 
     thread = models.ForeignKey(
-        Thread, verbose_name='Tópico', related_name='replies'
+        Thread, verbose_name='Tópico',
+        related_name='replies'
     )
     reply = models.TextField('Resposta')
     author = models.ForeignKey(
-        settings.AUTH_USER_MODEL, verbose_name='Autor', 
+        settings.AUTH_USER_MODEL, verbose_name='Autor',
         related_name='replies'
     )
     correct = models.BooleanField('Correta?', blank=True, default=False)
@@ -56,3 +57,19 @@ class Reply(models.Model):
         verbose_name = 'Resposta'
         verbose_name_plural = 'Respostas'
         ordering = ['-correct', 'created']
+
+def post_save_reply(created, instance, **kwargs):
+    instance.thread.answers = instance.thread.replies.count()
+    instance.thread.save()
+
+def post_delete_reply(instance, **kwargs):
+    instance.thread.answers = instance.thread.replies.count()
+    instance.thread.save()
+
+models.signals.post_save.connect(
+    post_save_reply, sender=Reply, dispatch_uid='post_save_reply'
+)
+
+models.signals.post_delete.connect(
+    post_delete_reply, sender=Reply, dispatch_uid='post_delete_reply'
+)

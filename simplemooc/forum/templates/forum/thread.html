@@ -66,25 +66,23 @@
             <div class="well" id="div-comments">
                 <h4 id="comments">Respostas
                 <a class="fright" href="#add_comment">Responder</a></h4>
-                <hr />
-                <p>
-                    <strong>Jackson</strong> disse à 2 atrás:
-                    <br />
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt voluptatem distinctio repudiandae ea ipsum harum provident, commodi. Fuga ullam ab placeat dolorum totam asperiores, temporibus sapiente soluta ipsam? Cumque, ea.
-                    <br />
-                   
-                    <a href="" title="" class="pure-button button-error reply-cancel-correct-lnk">Cancelar Resposta Correta</a>
+                {% for reply in object.replies.all %}
+                    <hr />
+                    {% filter linebreaks %}
+                        <strong>{{ reply.author }}</strong> disse à {{ reply.created|timesince }} atrás:
+                        {{ reply.reply }}
+                       
+                        <a href="" title="" class="pure-button button-error reply-cancel-correct-lnk">Cancelar Resposta Correta</a>
 
-                    <a href="" title="" class="pure-button button-success reply-correct-lnk">Resposta Correta</a>
+                        <a href="" title="" class="pure-button button-success reply-correct-lnk">Resposta Correta</a>
 
-                    <span class="fright label-success reply-correct-msg">resposta indicada pelo autor</span>
-                    <br class="reply-correct-msg" />
+                        <span class="fright label-success reply-correct-msg">resposta indicada pelo autor</span>
+                        <br class="reply-correct-msg" />
 
-                    <span class="fright label-success">resposta indicada pelo autor</span>
-                    <br />
-
-                </p>
-
+                        <span class="fright label-success">resposta indicada pelo autor</span>
+                        <br />
+                    {% endfilter %}
+                {% endfor %}
                 <hr />
                 <form method="post" class="pure-form pure-form-stacked" id="add_comment">
                     <fieldset>
