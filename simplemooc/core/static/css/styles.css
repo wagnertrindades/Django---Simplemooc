@@ -362,3 +362,7 @@ aside a, aside a:visited {
 .text-left {
   text-align: left;
 }
+
+.hidden{
+  display: none;
+}

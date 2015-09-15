@@ -10,7 +10,7 @@ class ThreadAdmin(admin.ModelAdmin):
 
 class ReplyAdmin(admin.ModelAdmin):
 
-    list_display = ['thread', 'author', 'created', 'modified']
+    list_display = ['thread', 'author', 'created', 'modified', 'correct']
     search_fields = ['thread__title', 'author__email', 'reply']
 
 admin.site.register(Thread, ThreadAdmin)

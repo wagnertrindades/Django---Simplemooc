@@ -68,20 +68,26 @@
                 <a class="fright" href="#add_comment">Responder</a></h4>
                 {% for reply in object.replies.all %}
                     <hr />
-                    {% filter linebreaks %}
-                        <strong>{{ reply.author }}</strong> disse à {{ reply.created|timesince }} atrás:
-                        {{ reply.reply }}
-                       
-                        <a href="" title="" class="pure-button button-error reply-cancel-correct-lnk">Cancelar Resposta Correta</a>
+                    <p>
+                        <strong>{{ reply.author }}</strong> disse à {{ reply.created|timesince }} atrás:<br>
+                        {{ reply.reply|linebreaksbr }}
+                        <br>
+                        {% if object.author == user %}
+                            <a href="{% url 'forum:reply_incorrect' reply.pk %}" title="" class="pure-button button-error reply-cancel-correct-lnk {% if not reply.correct %}hidden{% endif %}">
+                                Cancelar Resposta Correta
+                            </a>
 
-                        <a href="" title="" class="pure-button button-success reply-correct-lnk">Resposta Correta</a>
-
-                        <span class="fright label-success reply-correct-msg">resposta indicada pelo autor</span>
-                        <br class="reply-correct-msg" />
-
-                        <span class="fright label-success">resposta indicada pelo autor</span>
-                        <br />
-                    {% endfilter %}
+                            <a href="{% url 'forum:reply_correct' reply.pk %}" title="" class="pure-button button-success reply-correct-lnk {% if reply.correct %}hidden{% endif %}">
+                                Resposta Correta
+                            </a>
+                            
+                            <span class="fright pure-button button-success reply-correct-msg {% if not reply.correct %}hidden{% endif %}">resposta indicada pelo autor</span>
+                            <br class="reply-correct-msg {% if not reply.correct %}hidden{% endif %}" />        
+                        {% elif reply.correct %}
+                            <span class="fright pure-button button-success reply-correct-msg">resposta indicada pelo autor</span>
+                            <br class="reply-correct-msg" />  
+                        {% endif %}                        
+                    </p>    
                 {% endfor %}
                 <hr />
                 <form method="post" class="pure-form pure-form-stacked" id="add_comment">
@@ -120,7 +126,6 @@
                 alert(data.message);
             }
         }, "json");
-        return false;
     });
     $('.reply-correct-lnk').on('click', function(e){
         e.preventDefault();
@@ -139,7 +144,6 @@
                 alert(data.message)
             }
         }, 'json');
-        return false;
     })
 </script>
 {% endblock %}
